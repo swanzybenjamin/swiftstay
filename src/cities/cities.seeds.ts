@@ -1,4 +1,4 @@
-import sequelize from '../db/sequelize.config';
+//import sequelize from '../db/db.config';
 import City from './city.model';
 
 const cities = [
@@ -17,16 +17,20 @@ const cities = [
 const seedCities = async () => {
   try {
     await sequelize.sync(); // Sync the model with the database
-    for (const city of cities) {
-      await City.create(city);
-    }
+    const existingCities = await City.findAll();
+    if (existingCities.length > 0) {
+      console.log('Cities are already seeded.');
+    } else {
+      // Seed cities if they don't exist in the database
+      for (const city of cities) {
+        await City.create(city);
+      }
 
-    console.log('Cities seeded successfully.');
+      console.log('Cities seeded successfully.');
+    }
   } catch (error) {
     console.error('Error seeding cities:', error);
-  } finally {
-    await sequelize.close(); // Close the database connection
   }
 };
 
-export default seedCities();
+export default seedCities;
