@@ -1,5 +1,3 @@
-import { Cities } from './cities.model';
-
 export const citiesSeed = [
   { name: 'Accra', region: 'Greater Accra Region' },
   { name: 'Kumasi', region: 'Ashanti Region' },
