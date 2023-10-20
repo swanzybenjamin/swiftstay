@@ -1,14 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import City from './city.model';
+import { Cities } from './cities.model';
 
 @Injectable()
 export class CityService {
-  async getAllCities(): Promise<City[]> {
+  async allCities(): Promise<Cities[]> {
     try {
-      const cities = await City.findAll();
+      const cities = await Cities.findAll();
       return cities;
     } catch (error) {
       throw new Error('Error fetching cities: ' + error.message);
+    }
+  }
+
+  async oneCity(id: number): Promise<Cities> {
+    try {
+      const city = await Cities.findByPk(id);
+      return city;
+    } catch (error) {
+      throw new Error('Error fetching city: ' + error.message);
     }
   }
 }
